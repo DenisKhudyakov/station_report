@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "station-report"
+version = "0.1.0"
+description = ""
+authors = ["DenisKhudyakov <denis.hudyakov27@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^5.0.6"
+psycopg2-binary = "^2.9.9"
+python-dotenv = "^1.0.1"
+
+
+[tool.poetry.group.lint.dependencies]
+black = "^24.4.2"
+mypy = "^1.10.0"
+isort = "^5.13.2"
+flake8 = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
