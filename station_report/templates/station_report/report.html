@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет богов снабжения</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        .input-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-container input, .input-container select {
+            width: calc(33.333% - 10px);
+            margin-right: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .input-container input[type="date"] {
+            width: calc(33.333% - 14px);
+        }
+
+        .input-container select {
+            width: calc(33.333% + 2px);
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <h1>Отчет богов снабжения</h1>
+
+    <div class="input-container">
+        <label for="stationNumber">Введите номер станции:</label>
+        <input type="text" id="stationNumber" name="stationNumber">
+    </div>
+
+    <div class="input-container">
+        <label for="dateFrom">Дата от:</label>
+        <input type="date" id="dateFrom" name="dateFrom">
+    </div>
+
+    <div class="input-container">
+        <label for="dateTo">Дата до:</label>
+        <input type="date" id="dateTo" name="dateTo">
+    </div>
+
+    <div class="input-container">
+        <label for="section">Выберите раздел:</label>
+        <select id="section">
+            <option value="section1">Раздел 1</option>
+            <option value="section2">Раздел 2</option>
+            <option value="section3">Раздел 3</option>
+        </select>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Номер станции</th>
+                <th>Название раздела</th>
+                <th>Дата выдачи СЗ</th>
+                <th>Дата выдачи РД</th>
+                <th>Старт работ</th>
+                <th>Плановая дата комплектации</th>
+                <th>Комментарий</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Section A</td>
+                <td>2024-04-26</td>
+                <td>2024-04-28</td>
+                <td>2024-05-01</td>
+                <td>2024-05-15</td>
+                <td>Comment 1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Section B</td>
+                <td>2024-04-27</td>
+                <td>2024-04-30</td>
+                <td>2024-05-03</td>
+                <td>2024-05-17</td>
+                <td>Comment 2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Section C</td>
+                <td>2024-04-28</td>
+                <td>2024-05-02</td>
+                <td>2024-05-05</td>
+                <td>2024-05-20</td>
+                <td>Comment 3</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
