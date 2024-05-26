@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет богов снабжения</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <h1>Отчет богов снабжения</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Номер станции</th>
+                <th rowspan="2">Этап</th>
+                <th rowspan="2">Скомплектовано</th>
+                <th colspan="2">Дата выдачи</th>
+                <th rowspan="2">Старт работ</th>
+                <th rowspan="2">Дата комплектации</th>
+                <th rowspan="2">Комментарий</th>
+            </tr>
+            <tr>
+                <th>СЗ</th>
+                <th>РД</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="3">1</td>
+                <td>KM</td>
+                <td>Да</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>OB</td>
+                <td>нет</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>TX</td>
+                <td>да</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td>20.10.2024</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

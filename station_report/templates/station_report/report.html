@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,10 +77,15 @@
             width: calc(33.333% + 2px);
         }
     </style>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
 </head>
 <body>
 
-<div id="container">
+<div class="col-9" id="container">
     <h1>Отчет богов снабжения</h1>
 
     <div class="input-container">
@@ -105,50 +111,42 @@
             <option value="section3">Раздел 3</option>
         </select>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Номер станции</th>
-                <th>Название раздела</th>
-                <th>Дата выдачи СЗ</th>
-                <th>Дата выдачи РД</th>
-                <th>Старт работ</th>
-                <th>Плановая дата комплектации</th>
-                <th>Комментарий</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Section A</td>
-                <td>2024-04-26</td>
-                <td>2024-04-28</td>
-                <td>2024-05-01</td>
-                <td>2024-05-15</td>
-                <td>Comment 1</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Section B</td>
-                <td>2024-04-27</td>
-                <td>2024-04-30</td>
-                <td>2024-05-03</td>
-                <td>2024-05-17</td>
-                <td>Comment 2</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Section C</td>
-                <td>2024-04-28</td>
-                <td>2024-05-02</td>
-                <td>2024-05-05</td>
-                <td>2024-05-20</td>
-                <td>Comment 3</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2">Номер станции</th>
+                    <th rowspan="2">Этап</th>
+                    <th scope="col" rowspan="2">Компл.</th>
+                    <th colspan="2">Дата выдачи</th>
+                    <th rowspan="2">Старт работ</th>
+                    <th rowspan="2">Комментарий</th>
+                    <th rowspan="2">Дата комплектации</th>
+                </tr>
+                <tr>
+                    <th>СЗ</th>
+                    <th>РД</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        {% for station in stations %}
+                            <th rowspan={{ stations.len }}>{{ station }}</th>
+                            {% for sec in sections %}
+                                <th>{{ sec }}</th>
+                                <th>Да</th>
+                                {% for data in section_data %}
+                                    <th>{{ data.issue_date_SZ }}</th>
+                                    <th>{{ data.issue_date_RD }}</th>
+                                    <th>21.12.2024</th>
+                                    <th>{{ data.comment }}</th>
+                                    <th>31.12.2021</th>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 </html>
