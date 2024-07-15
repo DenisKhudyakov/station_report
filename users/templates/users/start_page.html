@@ -1,5 +1,6 @@
 {% load static %}
 {% load tag_date_time %}
+{%load crispy_forms_tags %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,19 +16,12 @@
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
   </head>
   <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" method="post">
       <img class="mb-4" src="{% static 'image/299328-drevnegrecheskie-bogi-21.jpg' %}" alt="" width="200" height="200">
       <h1 class="h3 mb-3 font-weight-normal">Вход в отчет</h1>
-      <label for="inputEmail" class="sr-only">Логин</label>
-      <input type="text" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
-      <label for="inputPassword" class="sr-only">Пароль</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me">Запомнить меня
-        </label>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
       <p class="mt-5 mb-3 text-muted">{% tag_date_time %}</p>
     </form>
   </body>
