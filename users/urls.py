@@ -8,6 +8,6 @@ app_name = UsersConfig.name
 
 
 urlpatterns = [
-    path('', UserLogin.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path("", UserLogin.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(), name="logout"),
 ]

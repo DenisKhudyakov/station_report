@@ -14,6 +14,9 @@ class SectionAdmin(admin.ModelAdmin):
         "station",
         "section_name",
         "is_completed",
+        "comment",
+        "start_work_date",
+        "complate_date",
     )
 
 

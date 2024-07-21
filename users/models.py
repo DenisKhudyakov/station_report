@@ -4,7 +4,8 @@ from django.db import models
 
 class User(AbstractUser):
     """Класс для пользователя"""
-    username = models.CharField(max_length=100, name='Имя пользователя', unique=True)
+
+    username = models.CharField(max_length=100, name="Имя пользователя", unique=True)
 
     REQUIRED_FIELDS = []  # обязательные поля
 

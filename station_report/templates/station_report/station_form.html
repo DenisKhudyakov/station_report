@@ -1,0 +1,67 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Редактирование станции</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+  </head>
+  <body class="card">
+    <div class="container">
+        <h1>Станция {{ station.station_number }}</h1>
+        <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div>
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <h2>Этап производства</h2>
+                {{ section_formset.management_form }}
+                {% for section_form in section_formset %}
+                    <div class="section-form">
+                        {{ section_form|crispy }}
+                        <div>
+                            {% if section_form.errors %}
+                                <div class="alert alert-danger">
+                                    {{ section_form.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <h3>Даты выдачи РД и СЗ</h3>
+                        {% with section_form|get_date_formset:section_date_formsets as date_formset %}
+                            {% if date_formset %}
+                                {{ date_formset.management_form }}
+                                {% for date_form in date_formset %}
+                                    {{ date_form|crispy }}
+                                    <div>
+                                        {% if date_form.errors %}
+                                            <div class="alert alert-danger">
+                                                {{ date_form.errors }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                {% endfor %}
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-outline-success" href="{% url 'report:report_view' %}">Отмена</a>
+        </form>
+    </div>
+  </body>
+</html>

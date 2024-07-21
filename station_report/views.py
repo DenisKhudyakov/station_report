@@ -1,10 +1,13 @@
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, UpdateView, DeleteView
 
+from station_report.forms import StationForm, SectionFormSet, SectionDateFormSet
 from station_report.models import Station, Section, SectionDate
 
 
 class StationReportView(ListView):
     """Основной контроллер отображения отчета"""
+
     template_name = "station_report/main.html"
     model = Station
 
@@ -17,20 +20,69 @@ class StationReportView(ListView):
             data_structure = {
                 "station": station,
                 "sections": {
-                    "КМ": {"section_name": None, "issue_date_SZ": [], "issue_date_RD": [], "is_completed": None,
-                           "start_work_date": None, "comment": None, "complate_date": None},
-                    "ТХ": {"section_name": None, "issue_date_SZ": [], "issue_date_RD": [], "is_completed": None,
-                           "start_work_date": None, "comment": None, "complate_date": None},
-                    "ЭОМ": {"section_name": None, "issue_date_SZ": [], "issue_date_RD": [], "is_completed": None,
-                            "start_work_date": None, "comment": None, "complate_date": None},
-                    "ЭОМшк": {"section_name": None, "issue_date_SZ": [], "issue_date_RD": [], "is_completed": None,
-                              "start_work_date": None, "comment": None, "complate_date": None},
-                    "АК": {"section_name": None, "issue_date_SZ": [], "issue_date_RD": [], "is_completed": None,
-                           "start_work_date": None, "comment": None, "complate_date": None},
-                    "АКшк": {"section_name": None, "issue_date_SZ": [], "issue_date_RD": [], "is_completed": None,
-                             "start_work_date": None, "comment": None, "complate_date": None},
-                    "ОВ": {"section_name": None, "issue_date_SZ": [], "issue_date_RD": [], "is_completed": None,
-                           "start_work_date": None, "comment": None, "complate_date": None},
+                    "КМ": {
+                        "section_name": None,
+                        "issue_date_SZ": [],
+                        "issue_date_RD": [],
+                        "is_completed": None,
+                        "start_work_date": None,
+                        "comment": None,
+                        "complate_date": None,
+                    },
+                    "ТХ": {
+                        "section_name": None,
+                        "issue_date_SZ": [],
+                        "issue_date_RD": [],
+                        "is_completed": None,
+                        "start_work_date": None,
+                        "comment": None,
+                        "complate_date": None,
+                    },
+                    "ЭОМ": {
+                        "section_name": None,
+                        "issue_date_SZ": [],
+                        "issue_date_RD": [],
+                        "is_completed": None,
+                        "start_work_date": None,
+                        "comment": None,
+                        "complate_date": None,
+                    },
+                    "ЭОМшк": {
+                        "section_name": None,
+                        "issue_date_SZ": [],
+                        "issue_date_RD": [],
+                        "is_completed": None,
+                        "start_work_date": None,
+                        "comment": None,
+                        "complate_date": None,
+                    },
+                    "АК": {
+                        "section_name": None,
+                        "issue_date_SZ": [],
+                        "issue_date_RD": [],
+                        "is_completed": None,
+                        "start_work_date": None,
+                        "comment": None,
+                        "complate_date": None,
+                    },
+                    "АКшк": {
+                        "section_name": None,
+                        "issue_date_SZ": [],
+                        "issue_date_RD": [],
+                        "is_completed": None,
+                        "start_work_date": None,
+                        "comment": None,
+                        "complate_date": None,
+                    },
+                    "ОВ": {
+                        "section_name": None,
+                        "issue_date_SZ": [],
+                        "issue_date_RD": [],
+                        "is_completed": None,
+                        "start_work_date": None,
+                        "comment": None,
+                        "complate_date": None,
+                    },
                 },
             }
 
@@ -44,11 +96,66 @@ class StationReportView(ListView):
                     section_data["complate_date"] = section.complate_date
                     for section_date in SectionDate.objects.filter(section=section):
                         if section_date.issue_date_SZ:
-                            section_data["issue_date_SZ"].append(section_date.issue_date_SZ)
+                            section_data["issue_date_SZ"].append(
+                                section_date.issue_date_SZ
+                            )
                         if section_date.issue_date_RD:
-                            section_data["issue_date_RD"].append(section_date.issue_date_RD)
+                            section_data["issue_date_RD"].append(
+                                section_date.issue_date_RD
+                            )
 
             data_stations.append(data_structure)
 
         context["stations"] = data_stations
         return context
+
+
+class StationReportUpdateView(UpdateView):
+    """Обновление отчет по станции"""
+
+    model = Station
+    form_class = StationForm
+    success_url = reverse_lazy("report:report_view")
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            section_formset = SectionFormSet(self.request.POST, instance=self.object)
+            section_date_formsets = [
+                SectionDateFormSet(self.request.POST, instance=section)
+                for section in self.object.section_set.all()
+            ]
+        else:
+            section_formset = SectionFormSet(instance=self.object)
+            section_date_formsets = [
+                SectionDateFormSet(instance=section)
+                for section in self.object.section_set.all()
+            ]
+        data['section_formset'] = section_formset
+        data['section_date_formsets'] = section_date_formsets
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        section_formset = context['section_formset']
+        section_date_formsets = context['section_date_formsets']
+        self.object = form.save()
+        if section_formset.is_valid():
+            self.object = form.save()
+            section_formset.instance = self.object
+            section_formset.save()
+            for section_form, date_formset in zip(section_formset, section_date_formsets):
+                if date_formset.is_valid():
+                    date_formset.instance = section_form.instance
+                    date_formset.save()
+            return super().form_valid(form)
+
+
+
+
+
+class StationReportDeleteView(DeleteView):
+    """Удаление отчета по станции"""
+
+    model = Station
+    success_url = "report:report_view"
