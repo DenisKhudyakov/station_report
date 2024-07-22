@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
-from station_report.forms import StationForm, SectionFormSet, SectionDateFormSet, SectionForm, SectionDateForm
+from station_report.forms import StationForm, SectionFormSet, SectionDateFormSet
 from station_report.models import Station, Section, SectionDate
 
 
@@ -122,17 +122,19 @@ class StationReportUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if self.request.POST:
-            data['section_formset'] = SectionFormSet(self.request.POST, instance=self.object)
-            data['section_date_formsets'] = [
+            section_formset = SectionFormSet(self.request.POST, instance=self.object)
+            section_date_formsets = [
                 SectionDateFormSet(self.request.POST, instance=section)
                 for section in self.object.section_set.all()
             ]
         else:
-            data['section_formset'] = SectionFormSet(instance=self.object)
-            data['section_date_formsets'] = [
+            section_formset = SectionFormSet(instance=self.object)
+            section_date_formsets = [
                 SectionDateFormSet(instance=section)
                 for section in self.object.section_set.all()
             ]
+        data['section_formset'] = section_formset
+        data['section_date_formsets'] = section_date_formsets
         return data
 
     def form_valid(self, form):
@@ -146,15 +148,17 @@ class StationReportUpdateView(UpdateView):
             section_formset.instance = self.object
             section_formset.save()
         else:
+            print('Ошибка в section_formset:', section_formset.errors)
             return self.form_invalid(form)
-        for section_date in section_date_formsets:
-            if section_date.is_valid():
-                section_date.instance = self.object
-                section_date.save()
-                print('Сохранение данных')
+
+        for section_date_formset in section_date_formsets:
+            if section_date_formset.is_valid():
+                section_date_formset.instance = self.object
+                section_date_formset.save()
             else:
-                print('Ошибка сохранения данных')
+                print('Ошибка в section_date_formset:', section_date_formset.errors)
                 return self.form_invalid(form)
+
         return super().form_valid(form)
 
 

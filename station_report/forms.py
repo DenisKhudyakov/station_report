@@ -24,4 +24,4 @@ class SectionDateForm(forms.ModelForm):
 
 
 SectionFormSet = inlineformset_factory(Station, Section, form=SectionForm, extra=0, can_delete=True)
-SectionDateFormSet = inlineformset_factory(Section, SectionDate, form=SectionDateForm, extra=1, can_delete=True)
+SectionDateFormSet = inlineformset_factory(Section, SectionDate, form=SectionDateForm, extra=0, can_delete=True)
