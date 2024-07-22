@@ -13,8 +13,6 @@
 <!-- Bootstrap core CSS -->
 <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-
-
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -43,9 +41,6 @@
         }
     </style>
 
-
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
   </head>
 <body>
 
@@ -56,12 +51,12 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="post">
+                                <h4 class="card-title mb-4">Создать станцию</h4>
                                 {% csrf_token %}
-                                <h4 class="card-title mb-4">Удаление станции №{{ object.station_number }}</h4>
-                                <p>Вы уверены, что хотите удалить станцию?</p>
+                                {{ form|crispy }}
                                 <div>
                                     <button type="submit" class="btn btn-danger">Подтвердить</button>
-                                    <a href="{% url 'report:report_view' %}" class="btn btn-warning">Отмена</a>
+                                    <a href="{% url 'report:report_view' %}" class="btn btn-warning">Назад</a>
                                 </div>
                             </form>
                         </div>

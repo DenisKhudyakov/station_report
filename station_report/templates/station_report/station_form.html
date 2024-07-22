@@ -21,39 +21,17 @@
         <form method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <div>
-                    {% if form.errors %}
-                        <div class="alert alert-danger">
-                            {{ form.errors }}
-                        </div>
-                    {% endif %}
-                </div>
-
                 <h2>Этап производства</h2>
                 {{ section_formset.management_form }}
                 {% for section_form in section_formset %}
                     <div class="section-form">
                         {{ section_form|crispy }}
-                        <div>
-                            {% if section_form.errors %}
-                                <div class="alert alert-danger">
-                                    {{ section_form.errors }}
-                                </div>
-                            {% endif %}
-                        </div>
                         <h3>Даты выдачи РД и СЗ</h3>
                         {% with section_form|get_date_formset:section_date_formsets as date_formset %}
                             {% if date_formset %}
                                 {{ date_formset.management_form }}
                                 {% for date_form in date_formset %}
                                     {{ date_form|crispy }}
-                                    <div>
-                                        {% if date_form.errors %}
-                                            <div class="alert alert-danger">
-                                                {{ date_form.errors }}
-                                            </div>
-                                        {% endif %}
-                                    </div>
                                 {% endfor %}
                             {% endif %}
                         {% endwith %}

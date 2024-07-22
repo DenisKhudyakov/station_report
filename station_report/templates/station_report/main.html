@@ -56,7 +56,7 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="btn btn-outline-primary mr-2" href="{% url 'report:station_report_create' %}">Создать станцию</a>
       </li>
 
       <form class="form-inline my-2 my-lg-0" id="filterForm">
@@ -105,14 +105,14 @@
                         <div>{{ station_data.station.station_number }}</div>
                         <div class="btn-group-vertical mt-2">
                             <a href="{% url 'report:station_report_update' station_data.station.pk %}" class="btn btn-sm btn-outline-success">Редактировать</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Удалить</a>
+                            <a href="{% url 'report:station_report_delete' station_data.station.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
                         </div>
                     </td>
                     <td>КМ</td>
                     <td>{{ station_data.sections.КМ.is_completed|yesno:"Да,Нет" }}</td>
                     <td>{{ station_data.sections.КМ.issue_date_SZ|join:", " }}</td>
                     <td>{{ station_data.sections.КМ.issue_date_RD|join:", " }}</td>
-                    <td>Старт работ</td>
+                    <td>{{ station_data.sections.КМ.start_work_date}}</td>
                     <td class="comment-column">{{ station_data.sections.КМ.comment }}</td>
                     <td>{{ station_data.sections.КМ.complate_date }}</td>
                 </tr>
@@ -121,7 +121,7 @@
                     <td>{{ station_data.sections.ТХ.is_completed|yesno:"Да,Нет" }}</td>
                     <td>{{ station_data.sections.ТХ.issue_date_SZ|join:", " }}</td>
                     <td>{{ station_data.sections.ТХ.issue_date_RD|join:", " }}</td>
-                    <td>Старт работ</td>
+                    <td>{{ station_data.sections.ТХ.start_work_date}}</td>
                     <td class="comment-column">{{ station_data.sections.ТХ.comment }}</td>
                     <td>{{ station_data.sections.ТХ.complate_date }}</td>
                 </tr>
@@ -130,7 +130,7 @@
                     <td>{{ station_data.sections.ЭОМ.is_completed|yesno:"Да,Нет" }}</td>
                     <td>{{ station_data.sections.ЭОМ.issue_date_SZ|join:", " }}</td>
                     <td>{{ station_data.sections.ЭОМ.issue_date_RD|join:", " }}</td>
-                    <td>Старт работ</td>
+                    <td>{{ station_data.sections.ЭОМ.start_work_date }}</td>
                     <td class="comment-column">{{ station_data.sections.ЭОМ.comment }}</td>
                     <td>{{ station_data.sections.ЭОМ.complate_date }}</td>
                 </tr>
@@ -139,7 +139,7 @@
                     <td>{{ station_data.sections.ЭОМшк.is_completed|yesno:"Да,Нет" }}</td>
                     <td>{{ station_data.sections.ЭОМшк.issue_date_SZ|join:", " }}</td>
                     <td>{{ station_data.sections.ЭОМшк.issue_date_RD|join:", " }}</td>
-                    <td>Старт работ</td>
+                    <td>{{ station_data.sections.ЭОМшк.start_work_date }}</td>
                     <td class="comment-column">{{ station_data.sections.ЭОМшк.comment }}</td>
                     <td>{{ station_data.sections.ЭОМшк.complate_date }}</td>
                 </tr>
@@ -148,7 +148,7 @@
                     <td>{{ station_data.sections.АК.is_completed|yesno:"Да,Нет" }}</td>
                     <td>{{ station_data.sections.АК.issue_date_SZ|join:", " }}</td>
                     <td>{{ station_data.sections.АК.issue_date_RD|join:", " }}</td>
-                    <td>Старт работ</td>
+                    <td>{{ station_data.sections.АК.start_work_date }}</td>
                     <td class="comment-column">{{ station_data.sections.АК.comment }}</td>
                     <td>{{ station_data.sections.АК.complate_date }}</td>
                 </tr>
@@ -157,7 +157,7 @@
                     <td>{{ station_data.sections.АКшк.is_completed|yesno:"Да,Нет" }}</td>
                     <td>{{ station_data.sections.АКшк.issue_date_SZ|join:", " }}</td>
                     <td>{{ station_data.sections.АКшк.issue_date_RD|join:", " }}</td>
-                    <td>Старт работ</td>
+                    <td>{{ station_data.sections.АКшк.start_work_date }}</td>
                     <td class="comment-column">{{ station_data.sections.АКшк.comment }}</td>
                     <td>{{ station_data.sections.АКшк.complate_date }}</td>
                 </tr>
@@ -166,7 +166,7 @@
                     <td>{{ station_data.sections.ОВ.is_completed|yesno:"Да,Нет" }}</td>
                     <td>{{ station_data.sections.ОВ.issue_date_SZ|join:", " }}</td>
                     <td>{{ station_data.sections.ОВ.issue_date_RD|join:", " }}</td>
-                    <td>Старт работ</td>
+                    <td>{{ station_data.sections.ОВ.start_work_date }}</td>
                     <td class="comment-column">{{ station_data.sections.ОВ.comment }}</td>
                     <td>{{ station_data.sections.ОВ.complate_date }}</td>
                 </tr>

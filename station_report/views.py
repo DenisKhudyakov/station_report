@@ -1,7 +1,9 @@
+from django.forms import inlineformset_factory
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
-from station_report.forms import StationForm, SectionFormSet, SectionDateFormSet
+from station_report.forms import StationForm, SectionFormSet, SectionDateFormSet, SectionForm, SectionDateForm
 from station_report.models import Station, Section, SectionDate
 
 
@@ -120,19 +122,17 @@ class StationReportUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if self.request.POST:
-            section_formset = SectionFormSet(self.request.POST, instance=self.object)
-            section_date_formsets = [
+            data['section_formset'] = SectionFormSet(self.request.POST, instance=self.object)
+            data['section_date_formsets'] = [
                 SectionDateFormSet(self.request.POST, instance=section)
                 for section in self.object.section_set.all()
             ]
         else:
-            section_formset = SectionFormSet(instance=self.object)
-            section_date_formsets = [
+            data['section_formset'] = SectionFormSet(instance=self.object)
+            data['section_date_formsets'] = [
                 SectionDateFormSet(instance=section)
                 for section in self.object.section_set.all()
             ]
-        data['section_formset'] = section_formset
-        data['section_date_formsets'] = section_date_formsets
         return data
 
     def form_valid(self, form):
@@ -140,22 +140,52 @@ class StationReportUpdateView(UpdateView):
         section_formset = context['section_formset']
         section_date_formsets = context['section_date_formsets']
         self.object = form.save()
+
         if section_formset.is_valid():
             self.object = form.save()
             section_formset.instance = self.object
             section_formset.save()
-            for section_form, date_formset in zip(section_formset, section_date_formsets):
-                if date_formset.is_valid():
-                    date_formset.instance = section_form.instance
-                    date_formset.save()
-            return super().form_valid(form)
-
-
-
+        else:
+            return self.form_invalid(form)
+        for section_date in section_date_formsets:
+            if section_date.is_valid():
+                section_date.instance = self.object
+                section_date.save()
+                print('Сохранение данных')
+            else:
+                print('Ошибка сохранения данных')
+                return self.form_invalid(form)
+        return super().form_valid(form)
 
 
 class StationReportDeleteView(DeleteView):
     """Удаление отчета по станции"""
 
     model = Station
-    success_url = "report:report_view"
+    success_url = reverse_lazy("report:report_view")
+
+
+class StationCreateView(CreateView):
+    """Создание отчета по станции"""
+
+    model = Station
+    form_class = StationForm
+    success_url = reverse_lazy("report:report_view")
+    template_name = "station_report/station_create.html"
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+        section_names = ['КМ', 'ТХ', 'ЭОМ', 'ЭОМшк', 'АК', 'АКшк', 'ОВ']
+
+        for name in section_names:
+            section = Section.objects.create(
+                station=self.object,
+                section_name=name
+            )
+            SectionDate.objects.create(
+                section=section
+            )
+
+        return super().form_valid(form)
+
