@@ -47,8 +47,8 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/jumbotron.css' %}" rel="stylesheet">
   </head>
+  {% if user.is_authenticated%}
   <body>
-
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -65,8 +65,11 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="applyFilterButton">Фильтровать</button>
           <button class="btn btn-outline-success ml-2 my-2 my-sm-0" type="button" id="resetFilterButton">Сбросить фильтры</button>
       </form>
+        <form action="{% url 'users:logout' %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-outline-success ml-2" type="submit">Выйти из отчета</button>
+        </form>
     </ul>
-
   </div>
 </nav>
 
@@ -223,4 +226,5 @@
 
 
   </body>
+{% endif %}
 </html>
