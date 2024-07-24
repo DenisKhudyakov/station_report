@@ -19,11 +19,3 @@ class SectionAdmin(admin.ModelAdmin):
         "complate_date",
     )
 
-
-@admin.register(models.SectionDate)
-class SectionDateAdmin(admin.ModelAdmin):
-    fields = (
-        "section",
-        "issue_date_SZ",
-        "issue_date_RD",
-    )

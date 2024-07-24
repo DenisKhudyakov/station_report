@@ -1,6 +1,6 @@
 from django import forms
 
-from station_report.models import Station, Section, SectionDate
+from station_report.models import Station, Section
 
 from django.forms import inlineformset_factory
 
@@ -14,14 +14,7 @@ class StationForm(forms.ModelForm):
 class SectionForm(forms.ModelForm):
     class Meta:
         model = Section
-        fields = ['section_name', 'is_completed', 'comment', 'start_work_date', 'complate_date']
-
-
-class SectionDateForm(forms.ModelForm):
-    class Meta:
-        model = SectionDate
-        fields = ['issue_date_SZ', 'issue_date_RD']
+        fields = '__all__'
 
 
 SectionFormSet = inlineformset_factory(Station, Section, form=SectionForm, extra=0, can_delete=True)
-SectionDateFormSet = inlineformset_factory(Section, SectionDate, form=SectionDateForm, extra=0, can_delete=True)

@@ -1,10 +1,8 @@
-from django.forms import inlineformset_factory
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
-from station_report.forms import StationForm, SectionFormSet, SectionDateFormSet
-from station_report.models import Station, Section, SectionDate
+from station_report.forms import StationForm, SectionFormSet
+from station_report.models import Station, Section
 
 
 class StationReportView(ListView):
@@ -96,15 +94,8 @@ class StationReportView(ListView):
                     section_data["comment"] = section.comment
                     section_data["start_work_date"] = section.start_work_date
                     section_data["complate_date"] = section.complate_date
-                    for section_date in SectionDate.objects.filter(section=section):
-                        if section_date.issue_date_SZ:
-                            section_data["issue_date_SZ"].append(
-                                section_date.issue_date_SZ
-                            )
-                        if section_date.issue_date_RD:
-                            section_data["issue_date_RD"].append(
-                                section_date.issue_date_RD
-                            )
+                    section_data["issue_date_SZ"] = section.issue_date_SZ
+                    section_data["issue_date_RD"] = section.issue_date_RD
 
             data_stations.append(data_structure)
 
@@ -123,24 +114,14 @@ class StationReportUpdateView(UpdateView):
         data = super().get_context_data(**kwargs)
         if self.request.POST:
             section_formset = SectionFormSet(self.request.POST, instance=self.object)
-            section_date_formsets = [
-                SectionDateFormSet(self.request.POST, instance=section)
-                for section in self.object.section_set.all()
-            ]
         else:
             section_formset = SectionFormSet(instance=self.object)
-            section_date_formsets = [
-                SectionDateFormSet(instance=section)
-                for section in self.object.section_set.all()
-            ]
         data['section_formset'] = section_formset
-        data['section_date_formsets'] = section_date_formsets
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
         section_formset = context['section_formset']
-        section_date_formsets = context['section_date_formsets']
         self.object = form.save()
 
         if section_formset.is_valid():
@@ -150,14 +131,6 @@ class StationReportUpdateView(UpdateView):
         else:
             print('Ошибка в section_formset:', section_formset.errors)
             return self.form_invalid(form)
-
-        for section_date_formset in section_date_formsets:
-            if section_date_formset.is_valid():
-                section_date_formset.instance = self.object
-                section_date_formset.save()
-            else:
-                print('Ошибка в section_date_formset:', section_date_formset.errors)
-                return self.form_invalid(form)
 
         return super().form_valid(form)
 
@@ -186,9 +159,6 @@ class StationCreateView(CreateView):
             section = Section.objects.create(
                 station=self.object,
                 section_name=name
-            )
-            SectionDate.objects.create(
-                section=section
             )
 
         return super().form_valid(form)

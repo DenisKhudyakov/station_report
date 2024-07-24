@@ -22,6 +22,8 @@ class Section(models.Model):
     )
     section_name = models.CharField(max_length=5, verbose_name="Название этапа")
     is_completed = models.BooleanField(default=False, verbose_name="Скомплектовано? Галочкой отметить")
+    issue_date_SZ = models.CharField(max_length=150, verbose_name="Дата выдачи СЗ", **NULLABLE)
+    issue_date_RD = models.CharField(max_length=150, verbose_name="Дата выдачи РД", **NULLABLE)
     comment = models.TextField(**NULLABLE, verbose_name="Комментарий")
     start_work_date = models.DateField(**NULLABLE, verbose_name="Дата начала работ")
     complate_date = models.DateField(
@@ -32,16 +34,4 @@ class Section(models.Model):
         return f"{self.station} - {self.section_name}"
 
 
-class SectionDate(models.Model):
-    """Модель дата выдачи СЗ и дата выдачи РД"""
 
-    section = models.ForeignKey(
-        Section,
-        on_delete=models.CASCADE,
-        verbose_name="дата выдачи СЗ и дата выдачи РД",
-    )
-    issue_date_SZ = models.DateField(verbose_name="Дата выдачи СЗ", **NULLABLE)
-    issue_date_RD = models.DateField(verbose_name="Дата выдачи РД", **NULLABLE)
-
-    def __str__(self):
-        return f"{self.section} - Dates"

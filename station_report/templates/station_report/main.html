@@ -1,5 +1,6 @@
 {% load static %}
 {% load tag_date_time %}
+{% load custom_tags %}
 <!doctype html>
 <html lang="ru">
   <head>
@@ -110,65 +111,65 @@
                     </td>
                     <td>КМ</td>
                     <td>{{ station_data.sections.КМ.is_completed|yesno:"Да,Нет" }}</td>
-                    <td>{{ station_data.sections.КМ.issue_date_SZ|join:", " }}</td>
-                    <td>{{ station_data.sections.КМ.issue_date_RD|join:", " }}</td>
-                    <td>{{ station_data.sections.КМ.start_work_date}}</td>
-                    <td class="comment-column">{{ station_data.sections.КМ.comment }}</td>
-                    <td>{{ station_data.sections.КМ.complate_date }}</td>
+                    <td>{{ station_data.sections.КМ.issue_date_SZ|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.КМ.issue_date_RD|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.КМ.start_work_date|default_if_none:'Пусто'}}</td>
+                    <td class="comment-column">{{ station_data.sections.КМ.comment|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.КМ.complate_date|default_if_none:'Пусто' }}</td>
                 </tr>
                 <tr>
                     <td>ТХ</td>
                     <td>{{ station_data.sections.ТХ.is_completed|yesno:"Да,Нет" }}</td>
-                    <td>{{ station_data.sections.ТХ.issue_date_SZ|join:", " }}</td>
-                    <td>{{ station_data.sections.ТХ.issue_date_RD|join:", " }}</td>
-                    <td>{{ station_data.sections.ТХ.start_work_date}}</td>
-                    <td class="comment-column">{{ station_data.sections.ТХ.comment }}</td>
-                    <td>{{ station_data.sections.ТХ.complate_date }}</td>
+                    <td>{{ station_data.sections.ТХ.issue_date_SZ|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ТХ.issue_date_RD|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ТХ.start_work_date|default_if_none:'Пусто'}}</td>
+                    <td class="comment-column">{{ station_data.sections.ТХ.comment|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ТХ.complate_date|default_if_none:'Пусто' }}</td>
                 </tr>
                 <tr>
                     <td>ЭОМ</td>
                     <td>{{ station_data.sections.ЭОМ.is_completed|yesno:"Да,Нет" }}</td>
-                    <td>{{ station_data.sections.ЭОМ.issue_date_SZ|join:", " }}</td>
-                    <td>{{ station_data.sections.ЭОМ.issue_date_RD|join:", " }}</td>
-                    <td>{{ station_data.sections.ЭОМ.start_work_date }}</td>
-                    <td class="comment-column">{{ station_data.sections.ЭОМ.comment }}</td>
-                    <td>{{ station_data.sections.ЭОМ.complate_date }}</td>
+                    <td>{{ station_data.sections.ЭОМ.issue_date_SZ|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ЭОМ.issue_date_RD|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ЭОМ.start_work_date|default_if_none:'Пусто' }}</td>
+                    <td class="comment-column">{{ station_data.sections.ЭОМ.comment|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ЭОМ.complate_date|default_if_none:'Пусто' }}</td>
                 </tr>
                 <tr>
                     <td>ЭОМшк</td>
                     <td>{{ station_data.sections.ЭОМшк.is_completed|yesno:"Да,Нет" }}</td>
-                    <td>{{ station_data.sections.ЭОМшк.issue_date_SZ|join:", " }}</td>
-                    <td>{{ station_data.sections.ЭОМшк.issue_date_RD|join:", " }}</td>
-                    <td>{{ station_data.sections.ЭОМшк.start_work_date }}</td>
-                    <td class="comment-column">{{ station_data.sections.ЭОМшк.comment }}</td>
-                    <td>{{ station_data.sections.ЭОМшк.complate_date }}</td>
+                    <td>{{ station_data.sections.ЭОМшк.issue_date_SZ|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ЭОМшк.issue_date_RD|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ЭОМшк.start_work_date|default_if_none:'Пусто' }}</td>
+                    <td class="comment-column">{{ station_data.sections.ЭОМшк.comment|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ЭОМшк.complate_date|default_if_none:'Пусто' }}</td>
                 </tr>
                 <tr>
                     <td>АК</td>
                     <td>{{ station_data.sections.АК.is_completed|yesno:"Да,Нет" }}</td>
-                    <td>{{ station_data.sections.АК.issue_date_SZ|join:", " }}</td>
-                    <td>{{ station_data.sections.АК.issue_date_RD|join:", " }}</td>
-                    <td>{{ station_data.sections.АК.start_work_date }}</td>
-                    <td class="comment-column">{{ station_data.sections.АК.comment }}</td>
-                    <td>{{ station_data.sections.АК.complate_date }}</td>
+                    <td>{{ station_data.sections.АК.issue_date_SZ|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.АК.issue_date_RD|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.АК.start_work_date|default_if_none:'Пусто' }}</td>
+                    <td class="comment-column">{{ station_data.sections.АК.comment|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.АК.complate_date|default_if_none:'Пусто' }}</td>
                 </tr>
                 <tr>
                     <td>АКшк</td>
                     <td>{{ station_data.sections.АКшк.is_completed|yesno:"Да,Нет" }}</td>
-                    <td>{{ station_data.sections.АКшк.issue_date_SZ|join:", " }}</td>
-                    <td>{{ station_data.sections.АКшк.issue_date_RD|join:", " }}</td>
-                    <td>{{ station_data.sections.АКшк.start_work_date }}</td>
-                    <td class="comment-column">{{ station_data.sections.АКшк.comment }}</td>
-                    <td>{{ station_data.sections.АКшк.complate_date }}</td>
+                    <td>{{ station_data.sections.АКшк.issue_date_SZ|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.АКшк.issue_date_RD|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.АКшк.start_work_date|default_if_none:'Пусто' }}</td>
+                    <td class="comment-column">{{ station_data.sections.АКшк.comment|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.АКшк.complate_date|default_if_none:'Пусто' }}</td>
                 </tr>
                 <tr>
                     <td>ОВ</td>
                     <td>{{ station_data.sections.ОВ.is_completed|yesno:"Да,Нет" }}</td>
-                    <td>{{ station_data.sections.ОВ.issue_date_SZ|join:", " }}</td>
-                    <td>{{ station_data.sections.ОВ.issue_date_RD|join:", " }}</td>
-                    <td>{{ station_data.sections.ОВ.start_work_date }}</td>
-                    <td class="comment-column">{{ station_data.sections.ОВ.comment }}</td>
-                    <td>{{ station_data.sections.ОВ.complate_date }}</td>
+                    <td>{{ station_data.sections.ОВ.issue_date_SZ|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ОВ.issue_date_RD|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ОВ.start_work_date|default_if_none:'Пусто' }}</td>
+                    <td class="comment-column">{{ station_data.sections.ОВ.comment|default_if_none:'Пусто' }}</td>
+                    <td>{{ station_data.sections.ОВ.complate_date|default_if_none:'Пусто' }}</td>
                 </tr>
             {% endfor %}
             </tbody>
